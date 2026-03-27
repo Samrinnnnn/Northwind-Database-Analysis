@@ -49,3 +49,17 @@ SELECT ROUND(AVG(unit_price),2) AS average_price, SUM(units_in_stock)
 AS total_stock, SUM(discontinued) AS total_discontinued
 FROM products;
 
+--10. Show the ProductName,CompanyName,CategoryName from the
+--products,suppliers, and categories table.
+SELECT p.product_name,s.company_name,c.category_name
+FROM products p
+JOIN suppliers s ON s.supplier_id=p.supplier_id
+JOIN categories c ON p.category_id=c.category_id;
+
+--11. Show the category_name and the average product unit price 
+--for each category rounded to 2 decimal places.
+SELECT c.category_name,ROUND(AVG(p.unit_price),2) AS average_unit_price
+FROM products p
+JOIN categories c ON p.category_id=c.category_id
+GROUP BY c.category_name;
+
