@@ -63,3 +63,19 @@ FROM products p
 JOIN categories c ON p.category_id=c.category_id
 GROUP BY c.category_name;
 
+--12. Show the city,company_name,contact_name from the customers and suppliers
+--table merged together.Create a column which contains 'customers' or 'suppliers'
+--depending on the table it came from.
+SELECT city,company_name,contact_name,'customers' AS relationship
+FROM customers
+UNION
+SELECT city,company_name,contact_name,'suppliers' AS relationship
+FROM suppliers
+ORDER BY city ASC;
+
+--13.Show the total amount of orders for each year/month.
+SELECT YEAR(order_date) AS ORDER_YEAR,MONTH(order_date) AS order_month,
+COUNT(order_id) AS no_of_orders
+FROM orders
+GROUP BY YEAR(order_date),MONTH(order_date);
+
