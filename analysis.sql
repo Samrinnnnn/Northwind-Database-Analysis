@@ -79,3 +79,23 @@ COUNT(order_id) AS no_of_orders
 FROM orders
 GROUP BY YEAR(order_date),MONTH(order_date);
 
+--14.Show the employee's first_name and last_name, a "num_orders"
+---column with a count of orders taken, and column called "Shipped"
+---that displays "On Time" if order shipped_date is less or 
+--equal to the required_date,"late" if the order shipped late,
+--"Not Shipped" if shipped_date is null. Order by employee last_name,
+--then by first_name, and then desc by num of orders.
+SELECT e.first_name,e.last_name,COUNT(o.order_id) AS num_orders,
+CASE WHEN o.shipped_date<= o.required_date THEN 'On Time'
+     WHEN o.shipped_date > o.required_date THEN 'Late'
+ELSE 'Not Shipped'
+END AS shipped_status
+FROM employees e
+JOIN orders o ON e.employee_id=o.employee_id
+GROUP BY e.first_name,e.last_name,
+CASE 
+WHEN o.shipped_date <= o.required_date THEN 'On Time'
+WHEN o.shipped_date > o.required_date THEN 'Late'
+ELSE 'Not Shipped'
+END
+ORDER BY e.last_name,e.first_name,num_orders DESC;
